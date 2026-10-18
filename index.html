@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monks Coffee Shop | Abilene's Neighborhood Coffee Spot</title>
+    <!-- Google Fonts: Playfair Display (headings) + Lora (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CSS Variables & Reset --- */
+        :root {
+            --espresso: #1c120b;
+            --cream: #f5f0e1;
+            --gold: #c5a059;
+            --dark-text: #1c120b;
+            --light-text: #f5f0e1;
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            color: var(--dark-text);
+            background-color: var(--cream);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--espresso);
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            font-family: 'Lora', serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-dark {
+            background-color: var(--espresso);
+            color: var(--cream);
+        }
+
+        .btn-dark:hover {
+            background-color: var(--gold);
+            color: var(--espresso);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-gold {
+            background-color: transparent;
+            color: var(--espresso);
+            border: 1px solid var(--gold);
+        }
+
+        .btn-gold:hover {
+            background-color: var(--gold);
+            color: var(--espresso);
+        }
+
+        section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background-color: var(--gold);
+            margin-top: 15px;
+        }
+
+        /* --- Header --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(28, 18, 11, 0.95);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        header.scrolled {
+            padding: 10px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo img {
+            display: block;
+            width: 132px;
+            height: 68px;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--cream);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--gold);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background-color: var(--gold);
+            color: var(--espresso);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .nav-cta:hover {
+            background-color: var(--cream);
+            transform: translateY(-2px);
+        }
+
+        /* Mobile menu */
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 2px;
+            background-color: var(--cream);
+            transition: var(--transition);
+        }
+
+        /* --- Hero Section (Asymmetrical, left‑aligned) --- */
+        .hero {
+            height: 100vh;
+            background-image: url('assets/coffee-shop-interior.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            color: var(--cream);
+            text-align: left;
+            padding: 0 10%;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--cream);
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #d4c5b2;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* --- Menu Section --- */
+        .menu {
+            background-color: var(--cream);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .menu-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .menu-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .menu-img {
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .menu-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .menu-card:hover .menu-img img {
+            transform: scale(1.05);
+        }
+
+        .latte-img img {
+            object-position: center 34%;
+        }
+
+        .menu-info {
+            padding: 1.5rem;
+            text-align: left;
+        }
+
+        .menu-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-info p {
+            font-size: 0.9rem;
+            color: #5c4a3e;
+            margin-bottom: 1rem;
+            min-height: 40px;
+        }
+
+        .price {
+            display: block;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        /* --- Guest Testimonials --- */
+        .testimonials {
+            background-color: #eee7d5;
+        }
+
+        .testimonial-note {
+            margin: -40px 0 35px;
+            color: #5c4a3e;
+            font-size: 0.9rem;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .testimonial-card {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .testimonial-stars {
+            color: var(--gold);
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-card blockquote {
+            color: #5c4a3e;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .testimonial-card cite {
+            color: var(--espresso);
+            font-style: normal;
+            font-weight: 700;
+        }
+
+        /* --- Community Section (Offset layout) --- */
+        .community {
+            background-color: var(--espresso);
+            color: var(--cream);
+        }
+
+        .community .btn-gold {
+            background-color: var(--gold);
+            color: var(--espresso);
+        }
+
+        .community .btn-gold:hover {
+            background-color: var(--cream);
+            border-color: var(--cream);
+        }
+
+        .community-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .community-text h2 {
+            color: var(--cream);
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .community-text p {
+            color: #c4b5a5;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .community-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .community-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            color: var(--cream);
+        }
+
+        .community-features li::before {
+            content: '→';
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        .community-img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* --- Merch Section --- */
+        .merch {
+            background-color: var(--cream);
+        }
+
+        .merch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .merch-card {
+            text-align: left;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+
+        .merch-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .merch-img {
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .merch-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .merch-card:hover .merch-img img {
+            transform: scale(1.05);
+        }
+
+        .merch-body {
+            padding: 1.5rem;
+        }
+
+        .merch-body h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .merch-body p {
+            font-size: 0.9rem;
+            color: #5c4a3e;
+            margin-bottom: 1rem;
+        }
+
+        /* --- Contact Section --- */
+        .contact {
+            background-color: var(--espresso);
+            color: var(--cream);
+            text-align: left;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .contact-info h2 {
+            color: var(--cream);
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-details {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .contact-details li {
+            margin-bottom: 1.2rem;
+            font-size: 1rem;
+            color: #d4c5b2;
+        }
+
+        .contact-details strong {
+            display: block;
+            color: var(--gold);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 3px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cream);
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            background-color: var(--gold);
+            color: var(--espresso);
+            border-color: var(--gold);
+        }
+
+        .newsletter-box {
+            background-color: var(--espresso);
+            padding: 2.5rem;
+            border-radius: 8px;
+            color: var(--cream);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .newsletter-box h3 {
+            color: var(--cream);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-box p {
+            color: #c4b5a5;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 15px;
+            background-color: rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 4px;
+            color: var(--cream);
+            font-family: 'Lora', serif;
+            font-size: 0.95rem;
+        }
+
+        .newsletter-form input::placeholder {
+            color: #8c7b6b;
+        }
+
+        .newsletter-form button {
+            background-color: var(--gold);
+            color: var(--espresso);
+            border: none;
+            padding: 0 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+
+        .newsletter-form button:hover {
+            background-color: var(--cream);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: #110b07;
+            color: #8c7b6b;
+            padding: 3rem 0 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-col h4 {
+            color: var(--cream);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col ul li a {
+            color: #8c7b6b;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--gold);
+            padding-left: 5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.85rem;
+            color: #5c4a3e;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            .community-grid, .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links, .nav-cta {
+                display: none;
+            }
+            .mobile-menu {
+                display: flex;
+            }
+            .hero {
+                padding: 0 20px;
+                text-align: center;
+                align-items: center;
+                justify-content: center;
+            }
+            .hero-content {
+                max-width: 100%;
+            }
+            .hero-cta {
+                justify-content: center;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+            .merch-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        /* Reveal animations on scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header id="mainHeader">
+        <div class="container nav-container">
+            <a href="#home" class="logo" aria-label="Monks Coffee Shop home">
+                <img src="logo/Monks+Logo_Full_White.webp" alt="Monks Coffee Shop, Abilene TX">
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+                <li><a href="#community">Community</a></li>
+                <li><a href="#merch">Merch</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+
+            <a href="#contact" class="nav-cta">Visit Us</a>
+            
+            <div class="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Abilene's Neighborhood Coffee Spot</h1>
+            <p>Open 7am–10pm daily. Serving locally roasted coffee and house‑made pastries to the community.</p>
+            <div class="hero-cta">
+                <a href="#menu" class="btn btn-dark">View Menu</a>
+                <a href="#community" class="btn btn-gold">Our Story</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="menu" id="menu">
+        <div class="container">
+            <h2 class="section-title reveal">Our Menu</h2>
+            <div class="menu-grid">
+                <!-- Espresso -->
+                <div class="menu-card reveal">
+                    <div class="menu-img">
+                        <img src="assets/espresso.jpg" alt="Freshly brewed espresso in a ceramic cup" loading="lazy" decoding="async">
+                    </div>
+                    <div class="menu-info">
+                        <h3>House Espresso</h3>
+                        <p>Our house blend, sourced from Guatemalan farms, is a smooth, medium‑roast espresso that highlights chocolate notes.</p>
+                        <span class="price">$3.50</span>
+                        <a href="#contact" class="btn btn-dark" style="padding: 8px 20px; font-size: 0.8rem;">Order Now</a>
+                    </div>
+                </div>
+
+                <!-- Latte -->
+                <div class="menu-card reveal">
+                    <div class="menu-img latte-img">
+                        <img src="assets/latte-art.jpg" alt="Latte with delicate foam art" loading="lazy" decoding="async">
+                    </div>
+                    <div class="menu-info">
+                        <h3>Velvet Latte</h3>
+                        <p>Steamed oat milk, house‑made vanilla‑bean syrup, and a dusting of cinnamon, served in a 12‑oz ceramic cup.</p>
+                        <span class="price">$5.25</span>
+                        <a href="#contact" class="btn btn-dark" style="padding: 8px 20px; font-size: 0.8rem;">Order Now</a>
+                    </div>
+                </div>
+
+                <!-- Pour-Over -->
+                <div class="menu-card reveal">
+                    <div class="menu-img">
+                        <img src="assets/pour-over.jpg" alt="Coffee being prepared for a pour-over" loading="lazy" decoding="async">
+                    </div>
+                    <div class="menu-info">
+                        <h3>Pour‑Over Reserve</h3>
+                        <p>Single‑origin beans from Ethiopia, brewed at 200°F for 4 minutes, delivering bright citrus and floral notes.</p>
+                        <span class="price">$6.00</span>
+                        <a href="#contact" class="btn btn-dark" style="padding: 8px 20px; font-size: 0.8rem;">Order Now</a>
+                    </div>
+                </div>
+
+                <!-- Avocado Toast -->
+                <div class="menu-card reveal">
+                    <div class="menu-img">
+                        <img src="assets/avocado-toast.jpg" alt="Avocado toast topped with soft-boiled eggs and seeds" loading="lazy" decoding="async">
+                    </div>
+                    <div class="menu-info">
+                        <h3>Avocado Toast Supreme</h3>
+                        <p>House‑baked sourdough topped with smashed avocado, soft‑boiled eggs, toasted seeds, and a squeeze of lemon.</p>
+                        <span class="price">$11.50</span>
+                        <a href="#contact" class="btn btn-dark" style="padding: 8px 20px; font-size: 0.8rem;">Order Now</a>
+                    </div>
+                </div>
+
+                <!-- Croissant -->
+                <div class="menu-card reveal">
+                    <div class="menu-img">
+                        <img src="assets/croissant.jpg" alt="Golden, flaky croissant" loading="lazy" decoding="async">
+                    </div>
+                    <div class="menu-info">
+                        <h3>Almond Croissant</h3>
+                        <p>Buttery, flaky pastry filled with sweet almond cream, baked fresh each morning.</p>
+                        <span class="price">$4.25</span>
+                        <a href="#contact" class="btn btn-dark" style="padding: 8px 20px; font-size: 0.8rem;">Order Now</a>
+                    </div>
+                </div>
+
+                <!-- Doppio -->
+                <div class="menu-card reveal">
+                    <div class="menu-img">
+                        <img src="assets/macchiato.jpg" alt="Espresso drink served in a glass" loading="lazy" decoding="async">
+                    </div>
+                    <div class="menu-info">
+                        <h3>Doppio Macchiato</h3>
+                        <p>Double shot of espresso topped with a silky foam, perfect for a quick pick‑me‑up.</p>
+                        <span class="price">$4.00</span>
+                        <a href="#contact" class="btn btn-dark" style="padding: 8px 20px; font-size: 0.8rem;">Order Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="reviews">
+        <div class="container">
+            <h2 class="section-title reveal">Kind Words from Our Guests</h2>
+            <p class="testimonial-note reveal">Sample testimonials for preview. Please replace with verified guest feedback before publishing.</p>
+            <div class="testimonial-grid">
+                <article class="testimonial-card reveal">
+                    <div class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</div>
+                    <blockquote>“A cozy place to slow down, enjoy a really good latte, and feel right at home.”</blockquote>
+                    <cite>— Sample guest review</cite>
+                </article>
+                <article class="testimonial-card reveal">
+                    <div class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</div>
+                    <blockquote>“The espresso and fresh pastries make this an easy stop for my morning routine.”</blockquote>
+                    <cite>— Sample guest review</cite>
+                </article>
+                <article class="testimonial-card reveal">
+                    <div class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</div>
+                    <blockquote>“Friendly neighborhood atmosphere, thoughtful coffee, and a lovely spot to catch up.”</blockquote>
+                    <cite>— Sample guest review</cite>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section class="community" id="community">
+        <div class="container">
+            <h2 class="section-title reveal" style="color: var(--cream);">Local Artists & Community Programs</h2>
+            <div class="community-grid">
+                <div class="community-text reveal">
+                    <p>Every month we rotate a new gallery of pieces from Abilene creators. We host a weekly open‑mic night and partner with the Abilene Mental Health Alliance on a quarterly merch line that raises $5,000 for community programs.</p>
+                    <ul class="community-features">
+                        <li>Rotating gallery – new local artist every 30 days</li>
+                        <li>Weekly open‑mic – every Thursday 7pm</li>
+                        <li>Mental‑health merch – 20% of sales go to the Abilene Mental Health Alliance</li>
+                        <li>Artist‑in‑Residence program – two creators per quarter</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-gold">Apply to Feature Your Art</a>
+                </div>
+                <div class="community-img reveal">
+                    <img src="assets/cafe-interior.jpg" alt="Warm, welcoming cafe interior" style="width: 100%; border-radius: 8px;" loading="lazy" decoding="async">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Merch Section -->
+    <section class="merch" id="merch">
+        <div class="container">
+            <h2 class="section-title reveal">Seasonal Merchandise</h2>
+            <div class="merch-grid">
+                <div class="merch-card reveal">
+                    <div class="merch-img">
+                        <img src="assets/espresso.jpg" alt="Coffee served in a ceramic cup" loading="lazy" decoding="async">
+                    </div>
+                    <div class="merch-body">
+                        <h3>Limited‑Edition Ceramic Mug</h3>
+                        <p>Hand‑glazed, featuring the monk silhouette and a warm bronze finish. Each one is unique.</p>
+                        <a href="#contact" class="btn btn-dark" style="margin-top: 1rem;">Shop Now</a>
+                    </div>
+                </div>
+
+                <div class="merch-card reveal">
+                    <div class="merch-img">
+                        <img src="assets/cotton-tee.jpg" alt="Classic cotton tee" loading="lazy" decoding="async">
+                    </div>
+                    <div class="merch-body">
+                        <h3>Mental Health Awareness Tee</h3>
+                        <p>Part of our monthly collaboration. Premium cotton, locally printed. 20% of sales go to charity.</p>
+                        <a href="#contact" class="btn btn-dark" style="margin-top: 1rem;">Shop Now</a>
+                    </div>
+                </div>
+
+                <div class="merch-card reveal">
+                    <div class="merch-img">
+                        <img src="assets/coffee-beans.jpg" alt="Freshly roasted coffee beans" loading="lazy" decoding="async">
+                    </div>
+                    <div class="merch-body">
+                        <h3>Seasonal Espresso Beans</h3>
+                        <p>Our signature winter/spring roast, packaged in limited edition artist‑designed bags.</p>
+                        <a href="#contact" class="btn btn-dark" style="margin-top: 1rem;">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title reveal" style="color: var(--cream);">Visit Us</h2>
+            <div class="contact-grid">
+                <div class="contact-info reveal">
+                    <ul class="contact-details">
+                        <li>
+                            <strong>Address</strong>
+                            <span>123 Community Way, Abilene, TX 79601</span>
+                        </li>
+                        <li>
+                            <strong>Phone</strong>
+                            <span><a href="tel:3254372984" style="color: var(--cream); text-decoration: underline;">(325) 437‑2984</a></span>
+                        </li>
+                        <li>
+                            <strong>Hours</strong>
+                            <span>Mon–Sat: 7am–10pm<br>Sun: 10am–10pm</span>
+                        </li>
+                        <li>
+                            <strong>Instagram</strong>
+                            <span><a href="https://instagram.com/monkscoffeeshop" target="_blank" style="color: var(--cream); text-decoration: underline;">@monkscoffeeshop</a></span>
+                        </li>
+                    </ul>
+                    <div class="social-links">
+                        <a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.53.5.09.66-.22.66-.49v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.39.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.33 4.69-4.56 4.94.36.31.68.92.68 1.85v2.74c0 .27.16.58.67.49A10.01 10.01 0 0022 12c0-5.52-4.48-10-10-10z"/></svg></a>
+                        <a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.53.5.09.66-.22.66-.49v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.39.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.33 4.69-4.56 4.94.36.31.68.92.68 1.85v2.74c0 .27.16.58.67.49A10.01 10.01 0 0022 12c0-5.52-4.48-10-10-10z"/></svg></a>
+                    </div>
+                </div>
+                <div class="newsletter-box reveal">
+                    <h3>Stay Updated</h3>
+                    <p>Enter your email to receive first‑look at new drops, artist features, and community events.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="your@email.com" required>
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Monks Coffee</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#menu">Menu</a></li>
+                        <li><a href="#reviews">Reviews</a></li>
+                        <li><a href="#community">Community</a></li>
+                        <li><a href="#merch">Merch</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Catering & Events</a></li>
+                        <li><a href="#">Artist Opportunities</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li>123 Community Way, Abilene, TX</li>
+                        <li>(325) 437‑2984</li>
+                        <li><a href="#">hello@monkscoffeeshop.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2026 Monks Coffee Shop. Abilene's neighborhood coffee house – brewed locally, served with heart.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Reveal animations on scroll
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Mobile menu toggle (basic)
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        const navCta = document.querySelector('.nav-cta');
+
+        mobileMenu.addEventListener('click', function() {
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+                navCta.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navCta.style.display = 'block';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '80px';
+                navLinks.style.left = '0';
+                navLinks.style.width = '100%';
+                navLinks.style.background = 'var(--espresso)';
+                navLinks.style.padding = '20px';
+                navLinks.style.zIndex = '1000';
+            }
+        });
+    </script>
+
+</body>
+</html>
