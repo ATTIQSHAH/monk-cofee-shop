@@ -4,13 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monks Coffee Shop | Abilene's Neighborhood Coffee Spot</title>
-    <!-- Google Fonts: Playfair Display (headings) + Lora (body) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="assets/coffee-shop-interior.jpg" fetchpriority="high">
+    <link rel="preload" as="font" type="font/woff2" href="assets/fonts/playfair-display-latin.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="assets/fonts/lora-latin.woff2" crossorigin>
     
     <style>
         /* --- CSS Variables & Reset --- */
+        @font-face {
+            font-family: 'Lora';
+            src: url('assets/fonts/lora-latin.woff2') format('woff2');
+            font-style: normal;
+            font-weight: 400 700;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Playfair Display';
+            src: url('assets/fonts/playfair-display-latin.woff2') format('woff2');
+            font-style: normal;
+            font-weight: 700;
+            font-display: swap;
+        }
+
         :root {
             --espresso: #1c120b;
             --cream: #f5f0e1;
@@ -88,6 +103,16 @@
         .btn-gold:hover {
             background-color: var(--gold);
             color: var(--espresso);
+        }
+
+        .hero .btn-gold {
+            background-color: var(--gold);
+            color: var(--espresso);
+        }
+
+        .hero .btn-gold:hover {
+            background-color: var(--cream);
+            border-color: var(--cream);
         }
 
         section {
@@ -198,6 +223,9 @@
             display: none;
             flex-direction: column;
             gap: 5px;
+            padding: 8px;
+            border: 0;
+            background: transparent;
             cursor: pointer;
         }
 
@@ -383,6 +411,95 @@
         .community .btn-gold:hover {
             background-color: var(--cream);
             border-color: var(--cream);
+        }
+
+        /* --- Table Reservation Demo --- */
+        .reservations {
+            background-color: #eee7d5;
+        }
+
+        .reservation-grid {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .reservation-copy h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .reservation-copy p {
+            color: #5c4a3e;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .reservation-demo-note {
+            padding: 1rem 1.25rem;
+            border-left: 3px solid var(--gold);
+            background-color: rgba(255,255,255,0.7);
+            color: #5c4a3e;
+            font-size: 0.9rem;
+        }
+
+        .reservation-form {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.25rem;
+            padding: 2rem;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 8px 24px rgba(28,18,11,0.08);
+        }
+
+        .reservation-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .reservation-field-full,
+        .reservation-form button,
+        .reservation-status {
+            grid-column: 1 / -1;
+        }
+
+        .reservation-field label {
+            color: var(--espresso);
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .reservation-field input,
+        .reservation-field select,
+        .reservation-field textarea {
+            width: 100%;
+            padding: 0.8rem 0.9rem;
+            border: 1px solid #d6cbb7;
+            border-radius: 4px;
+            background-color: #fffdf8;
+            color: var(--espresso);
+            font: inherit;
+        }
+
+        .reservation-field textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .reservation-field input:focus,
+        .reservation-field select:focus,
+        .reservation-field textarea:focus {
+            outline: 2px solid var(--gold);
+            outline-offset: 2px;
+        }
+
+        .reservation-status {
+            margin: 0;
+            color: #315c37;
+            font-weight: 700;
         }
 
         .community-grid {
@@ -644,7 +761,7 @@
 
         .footer-col ul li a:hover {
             color: var(--gold);
-            padding-left: 5px);
+            padding-left: 5px;
         }
 
         .copyright {
@@ -664,6 +781,10 @@
                 grid-template-columns: 1fr;
                 gap: 3rem;
             }
+            .reservation-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
             .section-title {
                 font-size: 2rem;
             }
@@ -673,8 +794,29 @@
             .nav-links, .nav-cta {
                 display: none;
             }
+            .nav-container {
+                position: relative;
+            }
             .mobile-menu {
                 display: flex;
+            }
+            .nav-links.is-open {
+                display: flex;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                gap: 0;
+                padding: 12px 20px;
+                background: var(--espresso);
+                border-top: 1px solid rgba(255,255,255,0.08);
+                z-index: 1000;
+            }
+            .nav-links.is-open a {
+                display: flex;
+                align-items: center;
+                min-height: 44px;
             }
             .hero {
                 padding: 0 20px;
@@ -696,6 +838,15 @@
             }
             .menu-grid {
                 grid-template-columns: 1fr;
+            }
+            .reservation-form {
+                grid-template-columns: 1fr;
+                padding: 1.5rem;
+            }
+            .reservation-field-full,
+            .reservation-form button,
+            .reservation-status {
+                grid-column: auto;
             }
             .merch-grid {
                 grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -724,22 +875,23 @@
                 <img src="logo/Monks+Logo_Full_White.webp" alt="Monks Coffee Shop, Abilene TX">
             </a>
             
-            <ul class="nav-links">
+            <ul class="nav-links" id="primary-navigation">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#menu">Menu</a></li>
+                <li><a href="#reservation">Reservations</a></li>
                 <li><a href="#reviews">Reviews</a></li>
                 <li><a href="#community">Community</a></li>
                 <li><a href="#merch">Merch</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
 
-            <a href="#contact" class="nav-cta">Visit Us</a>
+            <a href="#reservation" class="nav-cta">Reserve a Table</a>
             
-            <div class="mobile-menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <button class="mobile-menu" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="primary-navigation">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </button>
         </div>
     </header>
 
@@ -750,7 +902,7 @@
             <p>Open 7am–10pm daily. Serving locally roasted coffee and house‑made pastries to the community.</p>
             <div class="hero-cta">
                 <a href="#menu" class="btn btn-dark">View Menu</a>
-                <a href="#community" class="btn btn-gold">Our Story</a>
+                <a href="#reservation" class="btn btn-gold">Reserve a Table</a>
             </div>
         </div>
     </section>
@@ -763,7 +915,7 @@
                 <!-- Espresso -->
                 <div class="menu-card reveal">
                     <div class="menu-img">
-                        <img src="assets/espresso.jpg" alt="Freshly brewed espresso in a ceramic cup" loading="lazy" decoding="async">
+                        <img src="assets/espresso.jpg" alt="Freshly brewed espresso in a ceramic cup" width="900" height="1350" loading="lazy" decoding="async">
                     </div>
                     <div class="menu-info">
                         <h3>House Espresso</h3>
@@ -776,7 +928,7 @@
                 <!-- Latte -->
                 <div class="menu-card reveal">
                     <div class="menu-img latte-img">
-                        <img src="assets/latte-art.jpg" alt="Latte with delicate foam art" loading="lazy" decoding="async">
+                        <img src="assets/latte-art.jpg" alt="Latte with delicate foam art" width="900" height="1200" loading="lazy" decoding="async">
                     </div>
                     <div class="menu-info">
                         <h3>Velvet Latte</h3>
@@ -789,7 +941,7 @@
                 <!-- Pour-Over -->
                 <div class="menu-card reveal">
                     <div class="menu-img">
-                        <img src="assets/pour-over.jpg" alt="Coffee being prepared for a pour-over" loading="lazy" decoding="async">
+                        <img src="assets/pour-over.jpg" alt="Coffee being prepared for a pour-over" width="900" height="600" loading="lazy" decoding="async">
                     </div>
                     <div class="menu-info">
                         <h3>Pour‑Over Reserve</h3>
@@ -802,7 +954,7 @@
                 <!-- Avocado Toast -->
                 <div class="menu-card reveal">
                     <div class="menu-img">
-                        <img src="assets/avocado-toast.jpg" alt="Avocado toast topped with soft-boiled eggs and seeds" loading="lazy" decoding="async">
+                        <img src="assets/avocado-toast.jpg" alt="Avocado toast topped with soft-boiled eggs and seeds" width="900" height="600" loading="lazy" decoding="async">
                     </div>
                     <div class="menu-info">
                         <h3>Avocado Toast Supreme</h3>
@@ -815,7 +967,7 @@
                 <!-- Croissant -->
                 <div class="menu-card reveal">
                     <div class="menu-img">
-                        <img src="assets/croissant.jpg" alt="Golden, flaky croissant" loading="lazy" decoding="async">
+                        <img src="assets/croissant.jpg" alt="Golden, flaky croissant" width="900" height="720" loading="lazy" decoding="async">
                     </div>
                     <div class="menu-info">
                         <h3>Almond Croissant</h3>
@@ -828,7 +980,7 @@
                 <!-- Doppio -->
                 <div class="menu-card reveal">
                     <div class="menu-img">
-                        <img src="assets/macchiato.jpg" alt="Espresso drink served in a glass" loading="lazy" decoding="async">
+                        <img src="assets/macchiato.jpg" alt="Espresso drink served in a glass" width="900" height="1350" loading="lazy" decoding="async">
                     </div>
                     <div class="menu-info">
                         <h3>Doppio Macchiato</h3>
@@ -838,6 +990,56 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Reservation demo -->
+    <section class="reservations" id="reservation">
+        <div class="container reservation-grid">
+            <div class="reservation-copy">
+                <h2 class="section-title reveal">Save a Seat</h2>
+                <p>Planning a coffee date or gathering with friends? Choose a date and time in this reservation-request demo.</p>
+                <div class="reservation-demo-note">
+                    <strong>Portfolio demo only:</strong> this form does not send or save your details, check availability, or reserve a real table.
+                </div>
+            </div>
+            <form class="reservation-form reveal" id="reservationForm">
+                <div class="reservation-field">
+                    <label for="reservationName">Your name</label>
+                    <input id="reservationName" name="name" type="text" autocomplete="name" maxlength="80" required>
+                </div>
+                <div class="reservation-field">
+                    <label for="reservationEmail">Email address</label>
+                    <input id="reservationEmail" name="email" type="email" autocomplete="email" maxlength="254" required>
+                </div>
+                <div class="reservation-field">
+                    <label for="reservationDate">Preferred date</label>
+                    <input id="reservationDate" name="date" type="date" required>
+                </div>
+                <div class="reservation-field">
+                    <label for="reservationTime">Preferred time</label>
+                    <input id="reservationTime" name="time" type="time" required>
+                </div>
+                <div class="reservation-field">
+                    <label for="reservationGuests">Number of guests</label>
+                    <select id="reservationGuests" name="guests" required>
+                        <option value="1">1 guest</option>
+                        <option value="2" selected>2 guests</option>
+                        <option value="3">3 guests</option>
+                        <option value="4">4 guests</option>
+                        <option value="5">5 guests</option>
+                        <option value="6">6 guests</option>
+                        <option value="7">7 guests</option>
+                        <option value="8">8 guests</option>
+                    </select>
+                </div>
+                <div class="reservation-field reservation-field-full">
+                    <label for="reservationNotes">Anything else we should know? (optional)</label>
+                    <textarea id="reservationNotes" name="notes" maxlength="500"></textarea>
+                </div>
+                <button class="btn btn-dark" type="submit">Preview Reservation Request</button>
+                <p class="reservation-status" id="reservationStatus" role="status" aria-live="polite" hidden></p>
+            </form>
         </div>
     </section>
 
@@ -882,7 +1084,7 @@
                     <a href="#contact" class="btn btn-gold">Apply to Feature Your Art</a>
                 </div>
                 <div class="community-img reveal">
-                    <img src="assets/cafe-interior.jpg" alt="Warm, welcoming cafe interior" style="width: 100%; border-radius: 8px;" loading="lazy" decoding="async">
+                    <img src="assets/cafe-interior.jpg" alt="Warm, welcoming cafe interior" width="1200" height="800" style="width: 100%; border-radius: 8px;" loading="lazy" decoding="async">
                 </div>
             </div>
         </div>
@@ -895,7 +1097,7 @@
             <div class="merch-grid">
                 <div class="merch-card reveal">
                     <div class="merch-img">
-                        <img src="assets/espresso.jpg" alt="Coffee served in a ceramic cup" loading="lazy" decoding="async">
+                        <img src="assets/espresso.jpg" alt="Coffee served in a ceramic cup" width="900" height="1350" loading="lazy" decoding="async">
                     </div>
                     <div class="merch-body">
                         <h3>Limited‑Edition Ceramic Mug</h3>
@@ -906,7 +1108,7 @@
 
                 <div class="merch-card reveal">
                     <div class="merch-img">
-                        <img src="assets/cotton-tee.jpg" alt="Classic cotton tee" loading="lazy" decoding="async">
+                        <img src="assets/cotton-tee.jpg" alt="Classic cotton tee" width="900" height="900" loading="lazy" decoding="async">
                     </div>
                     <div class="merch-body">
                         <h3>Mental Health Awareness Tee</h3>
@@ -917,7 +1119,7 @@
 
                 <div class="merch-card reveal">
                     <div class="merch-img">
-                        <img src="assets/coffee-beans.jpg" alt="Freshly roasted coffee beans" loading="lazy" decoding="async">
+                        <img src="assets/coffee-beans.jpg" alt="Freshly roasted coffee beans" width="900" height="1125" loading="lazy" decoding="async">
                     </div>
                     <div class="merch-body">
                         <h3>Seasonal Espresso Beans</h3>
@@ -1034,25 +1236,38 @@
 
         // Mobile menu toggle (basic)
         const mobileMenu = document.querySelector('.mobile-menu');
-        const navLinks = document.querySelector('.nav-links');
-        const navCta = document.querySelector('.nav-cta');
+        const navLinks = document.querySelector('#primary-navigation');
 
         mobileMenu.addEventListener('click', function() {
-            if (navLinks.style.display === 'flex') {
-                navLinks.style.display = 'none';
-                navCta.style.display = 'none';
-            } else {
-                navLinks.style.display = 'flex';
-                navCta.style.display = 'block';
-                navLinks.style.flexDirection = 'column';
-                navLinks.style.position = 'absolute';
-                navLinks.style.top = '80px';
-                navLinks.style.left = '0';
-                navLinks.style.width = '100%';
-                navLinks.style.background = 'var(--espresso)';
-                navLinks.style.padding = '20px';
-                navLinks.style.zIndex = '1000';
-            }
+            const isExpanded = mobileMenu.getAttribute('aria-expanded') === 'true';
+            mobileMenu.setAttribute('aria-expanded', String(!isExpanded));
+            mobileMenu.setAttribute('aria-label', isExpanded ? 'Open navigation' : 'Close navigation');
+            navLinks.classList.toggle('is-open', !isExpanded);
+        });
+
+        navLinks.querySelectorAll('a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                mobileMenu.setAttribute('aria-expanded', 'false');
+                mobileMenu.setAttribute('aria-label', 'Open navigation');
+                navLinks.classList.remove('is-open');
+            });
+        });
+
+        const reservationForm = document.querySelector('#reservationForm');
+        const reservationDate = document.querySelector('#reservationDate');
+        const reservationStatus = document.querySelector('#reservationStatus');
+
+        function getLocalDateValue(date) {
+            const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+            return localDate.toISOString().slice(0, 10);
+        }
+
+        reservationDate.min = getLocalDateValue(new Date());
+
+        reservationForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            reservationStatus.textContent = 'Demo only — your request was not sent or saved, and no table was reserved.';
+            reservationStatus.hidden = false;
         });
     </script>
 
